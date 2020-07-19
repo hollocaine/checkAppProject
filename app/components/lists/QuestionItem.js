@@ -7,7 +7,7 @@ import Text from '../Text';
 import colors from '../../config/colors';
 
 function QuestionListItem({
-  ownerId,
+  user_id,
   loc_name,
   onPress,
   renderRightActions,

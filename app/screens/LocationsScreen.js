@@ -1,30 +1,35 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import Holder from '../components/Holder';
+import AppText from '../components/Text';
+import Button from '../components/Button';
 import colors from '../config/colors';
 import routes from '../navigation/routes';
 import Screen from '../components/Screen';
-
-const locations = [
-  {
-    loc_id: 1,
-    loc_name: 'Office',
-    ownerId: 1,
-  },
-  {
-    loc_id: 2,
-    loc_name: 'Warehouse',
-    ownerId: 1,
-  },
-];
+import ActivityIndicator from '../components/ActivityIndicator';
+import locationsApi from '../api/locations';
+import useApi from '../hooks/useApi';
 
 function LocationsScreen({ navigation }) {
+  const getLocationsApi = useApi(locationsApi.getLocations);
+
+  useEffect(() => {
+    getLocationsApi.request(1, 2, 3);
+  }, []);
+
   return (
     <Screen style={styles.screen}>
+      {getLocationsApi.error && (
+        <>
+          <AppText>Could not get the locations</AppText>
+          <Button title="Retry" onPress={loadLocations} />
+        </>
+      )}
+      <ActivityIndicator visible={getLocationsApi.loading} />
       <FlatList
-        data={locations}
-        keyExtractor={(location) => location.loc_id.toString()}
+        data={getLocationsApi.data}
+        keyExtractor={(location, index) => 'key' + index}
         renderItem={({ item }) => (
           <Holder
             loc_name={item.loc_name}

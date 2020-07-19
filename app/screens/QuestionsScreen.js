@@ -14,15 +14,15 @@ function QuestionsScreen({ route }) {
       location_id: '1',
       questions: [
         {
-          questionId: '1',
+          question_id: '1',
           question: 'Is there a fire extinguisher?',
         },
         {
-          questionId: '2',
+          question_id: '2',
           question: 'Is there a fire alarm?',
         },
         {
-          questionId: '3',
+          question_id: '3',
           question: 'Is there a fire hose?',
         },
       ],
@@ -31,15 +31,15 @@ function QuestionsScreen({ route }) {
       location_id: '2',
       questions: [
         {
-          questionId: '1',
+          question_id: '1',
           question: 'Is there a bigger fire extinguisher?',
         },
         {
-          questionId: '2',
+          question_id: '2',
           question: 'Is there a smaller fire alarm?',
         },
         {
-          questionId: '3',
+          question_id: '3',
           question: 'Is there a larger fire hose?',
         },
       ],
@@ -48,19 +48,19 @@ function QuestionsScreen({ route }) {
       location_id: '3',
       questions: [
         {
-          questionId: '1',
+          question_id: '1',
           question: 'Get the  hell out theres a fire?',
         },
         {
-          questionId: '2',
+          question_id: '2',
           question: 'Any marshmallows?',
         },
         {
-          questionId: '3',
+          question_id: '3',
           question: 'Put the kettle on?',
         },
         {
-          questionId: '4',
+          question_id: '4',
           question: 'Call the fire brigade?',
         },
       ],
@@ -76,14 +76,14 @@ function QuestionsScreen({ route }) {
                 <ListQuestions
                   key={i}
                   question={v.question}
-                  questionId={v.questionId}
-                  ownerId={item.ownerId}
+                  question_id={v.question_id}
+                  user_id={item.user_id}
                   locationId={item.locationId}
                 />
               ))
             : null
         }
-        keyExtractor={(item) => item.location_id}
+        keyExtractor={(item, index) => 'key' + index}
       />
     </View>
   );

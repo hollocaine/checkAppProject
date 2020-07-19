@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import AccountNavigator from './AccountNavigator';
 import FeedNavigator from './FeedNavigator';
-import ListingEditScreen from '../screens/LocationEditScreen';
+import LocationEditScreen from '../screens/LocationEditScreen';
 import NewLocationButton from './NewLocationButton';
 import routes from './routes';
 
@@ -22,12 +22,14 @@ const AppNavigator = () => (
       }}
     />
     <Tab.Screen
-      name="ListingEdit"
-      component={ListingEditScreen}
+      name="LocationEdit"
+      component={LocationEditScreen}
       options={({ navigation }) => ({
         tabBarButton: () => (
           <NewLocationButton
-            onPress={() => navigation.navigate(routes.LOCATION_EDIT)}
+            onPress={() =>
+              navigation.navigate(routes.LOCATION_EDIT, { user_id: '1' })
+            }
           />
         ),
         tabBarIcon: ({ color, size }) => (

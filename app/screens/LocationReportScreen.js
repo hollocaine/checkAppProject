@@ -8,7 +8,7 @@ import {
   FormPicker as Picker,
   SubmitButton,
 } from '../components/forms';
-import CategoryPickerItem from '../components/CategoryPickerItem';
+import LevelPickerItem from '../components/LevelPickerItem';
 import Screen from '../components/Screen';
 import FormImagePicker from '../components/forms/FormImagePicker';
 import useLocation from '../hooks/useLocation';
@@ -16,11 +16,11 @@ import useLocation from '../hooks/useLocation';
 const validationSchema = Yup.object().shape({
   title: Yup.string().required().min(1).label('Title'),
   description: Yup.string().label('Description'),
-  category: Yup.object().required().nullable().label('Category'),
+  level: Yup.object().required().nullable().label('Level'),
   //images: Yup.array().min(1, 'Please select at least one image.'),
 });
 
-const categories = [
+const levels = [
   {
     backgroundColor: '#fc5c65',
     icon: 'arrow-up-bold-circle-outline',
@@ -41,7 +41,7 @@ const categories = [
   },
 ];
 
-function LocationReportScreen({ locationId, questionId, ownerId }) {
+function LocationReportScreen({ locationId, question_id, user_id }) {
   const location = useLocation();
 
   return (
@@ -49,11 +49,11 @@ function LocationReportScreen({ locationId, questionId, ownerId }) {
       <Form
         initialValues={{
           locationId,
-          questionId,
-          ownerId,
+          question_id,
+          user_id,
           title: '',
           description: '',
-          category: null,
+          level: null,
           images: [],
         }}
         onSubmit={(values) => console.log(location)}
@@ -62,11 +62,11 @@ function LocationReportScreen({ locationId, questionId, ownerId }) {
         <FormImagePicker name="images" />
         <FormField maxLength={255} name="title" placeholder="Title" />
         <Picker
-          items={categories}
-          name="category"
+          items={levels}
+          name="level"
           numberOfColumns={3}
-          PickerItemComponent={CategoryPickerItem}
-          placeholder="Category"
+          PickerItemComponent={LevelPickerItem}
+          placeholder="Level"
           width="50%"
         />
         <FormField

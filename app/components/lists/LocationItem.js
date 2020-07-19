@@ -6,8 +6,8 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 import Text from '../Text';
 import colors from '../../config/colors';
 
-function ListItem({
-  ownerId,
+function LocationItem({
+  user_id,
   loc_name,
   title,
   subTitle,
@@ -78,4 +78,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ListItem;
+export default LocationItem;
