@@ -11,8 +11,6 @@ import {
   SubmitButton,
 } from '../components/forms';
 import authApi from '../api/auth';
-import AuthContext from '../auth/context';
-import authStorage from '../auth/storage';
 import useAuth from '../auth/useAuth';
 
 const validationSchema = Yup.object().shape({
