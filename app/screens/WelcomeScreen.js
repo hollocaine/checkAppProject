@@ -1,19 +1,19 @@
-import React from "react";
-import { ImageBackground, StyleSheet, View, Image, Text } from "react-native";
+import React from 'react';
+import { ImageBackground, StyleSheet, View, Image, Text } from 'react-native';
 
-import Button from "../components/Button";
-import routes from "../navigation/routes";
+import Button from '../components/Button';
+import routes from '../navigation/routes';
 
 function WelcomeScreen({ navigation }) {
   return (
     <ImageBackground
-      blurRadius={10}
+      blurRadius={3}
       style={styles.background}
-      source={require("../assets/background.jpg")}
+      source={require('../assets/background.png')}
     >
       <View style={styles.logoContainer}>
-        <Image style={styles.logo} source={require("../assets/logo-red.png")} />
-        <Text style={styles.tagline}>Sell What You Don't Need</Text>
+        <Image style={styles.logo} source={require('../assets/logo.png')} />
+        <Text style={styles.tagline}>Fire Safety Check</Text>
       </View>
       <View style={styles.buttonsContainer}>
         <Button
@@ -33,25 +33,25 @@ function WelcomeScreen({ navigation }) {
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    justifyContent: "flex-end",
-    alignItems: "center",
+    justifyContent: 'flex-end',
+    alignItems: 'center',
   },
   buttonsContainer: {
     padding: 20,
-    width: "100%",
+    width: '100%',
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 300,
+    height: 400,
   },
   logoContainer: {
-    position: "absolute",
+    position: 'absolute',
     top: 70,
-    alignItems: "center",
+    alignItems: 'center',
   },
   tagline: {
     fontSize: 25,
-    fontWeight: "600",
+    fontWeight: '600',
     paddingVertical: 20,
   },
 });
