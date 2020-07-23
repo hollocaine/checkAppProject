@@ -12,7 +12,7 @@ function LocationDetailsScreen({ route }) {
       <View style={styles.detailsContainer}>
         <Text style={styles.loc_name}>{location.loc_name}</Text>
         <View style={styles.userContainer}>
-          <LocationItem loc_name="Mosh Hamedani" />
+          <LocationItem loc_name="Alan Flynn" />
         </View>
       </View>
     </View>

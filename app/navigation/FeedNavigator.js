@@ -4,6 +4,8 @@ import Locations from '../screens/LocationsScreen';
 import LocationDetailsScreen from '../screens/LocationDetailsScreen';
 import Questions from '../screens/QuestionsScreen';
 import LocationReport from '../screens/LocationReportScreen';
+import ReportsScreen from '../screens/ReportsScreen';
+import QuestionsEdit from '../screens/QuestionsEditScreen';
 const Stack = createStackNavigator();
 
 const FeedNavigator = () => (
@@ -11,7 +13,9 @@ const FeedNavigator = () => (
     <Stack.Screen name="Locations" component={Locations} />
     <Stack.Screen name="Questions" component={Questions} />
     <Stack.Screen name="Add Report" component={LocationReport} />
+    <Stack.Screen name="Reports" component={ReportsScreen} />
     <Stack.Screen name="LocationDetails" component={LocationDetailsScreen} />
+    <Stack.Screen name="QuestionEdit" component={QuestionsEdit} />
   </Stack.Navigator>
 );
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Holder from '../components/Holder';
@@ -6,85 +6,45 @@ import colors from '../config/colors';
 import routes from '../navigation/routes';
 import Screen from '../components/Screen';
 import ListQuestions from '../components/lists/ListQuestions';
+import questionsApi from '../api/questions';
+import useApi from '../hooks/useApi';
+import { connect } from 'formik';
+import { cos } from 'react-native-reanimated';
 
-function QuestionsScreen({ route }) {
-  const location = route.params;
-  const DATA = [
-    {
-      location_id: '1',
-      questions: [
-        {
-          question_id: '1',
-          question: 'Is there a fire extinguisher?',
-        },
-        {
-          question_id: '2',
-          question: 'Is there a fire alarm?',
-        },
-        {
-          question_id: '3',
-          question: 'Is there a fire hose?',
-        },
-      ],
-    },
-    {
-      location_id: '2',
-      questions: [
-        {
-          question_id: '1',
-          question: 'Is there a bigger fire extinguisher?',
-        },
-        {
-          question_id: '2',
-          question: 'Is there a smaller fire alarm?',
-        },
-        {
-          question_id: '3',
-          question: 'Is there a larger fire hose?',
-        },
-      ],
-    },
-    {
-      location_id: '3',
-      questions: [
-        {
-          question_id: '1',
-          question: 'Get the  hell out theres a fire?',
-        },
-        {
-          question_id: '2',
-          question: 'Any marshmallows?',
-        },
-        {
-          question_id: '3',
-          question: 'Put the kettle on?',
-        },
-        {
-          question_id: '4',
-          question: 'Call the fire brigade?',
-        },
-      ],
-    },
-  ];
+function QuestionsScreen({ route, navigation }) {
+  const location_id = route.params.id;
+  const getQuestionsApi = useApi(questionsApi.getQuestions);
+  const [hasQuestions, setHasQuestions] = useState(true);
+  useEffect(() => {
+    getQuestionsApi.request();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={({ item }) =>
-          item.location_id === location.loc_id.toString()
-            ? item.questions.map((v, i) => (
-                <ListQuestions
-                  key={i}
-                  question={v.question}
-                  question_id={v.question_id}
-                  user_id={item.user_id}
-                  locationId={item.locationId}
-                />
-              ))
-            : null
-        }
-        keyExtractor={(item, index) => 'key' + index}
-      />
+      {hasQuestions ? (
+        <FlatList
+          data={getQuestionsApi.data}
+          renderItem={({ item }) =>
+            item.location_id === location_id.toString() && item.question !== ''
+              ? item.questions.map((v, i) => (
+                  <ListQuestions
+                    key={i}
+                    question={v.question}
+                    question_id={v.question_id}
+                    user_id={item.user_id}
+                    location_id={item.location_id}
+                  />
+                ))
+              : null
+          }
+          keyExtractor={(item, index) => 'key' + index}
+        />
+      ) : (
+        navigation.navigate(routes.QUESTION_EDIT, {
+          user_id: '1',
+          location_id: location_id,
+        })
+      )}
     </View>
   );
 }

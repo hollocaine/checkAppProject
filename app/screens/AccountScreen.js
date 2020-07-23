@@ -10,11 +10,12 @@ import useAuth from '../auth/useAuth';
 
 const menuItems = [
   {
-    title: 'My Locations',
+    title: 'My Reports',
     icon: {
       name: 'format-list-bulleted',
       backgroundColor: colors.primary,
     },
+    targetScreen: routes.REPORTS,
   },
   {
     title: 'My Messages',

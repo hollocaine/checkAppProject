@@ -41,14 +41,14 @@ const levels = [
   },
 ];
 
-function LocationReportScreen({ locationId, question_id, user_id }) {
+function LocationReportScreen({ location_id, question_id, user_id }) {
   const location = useLocation();
 
   return (
     <Screen style={styles.container}>
       <Form
         initialValues={{
-          locationId,
+          location_id,
           question_id,
           user_id,
           title: '',

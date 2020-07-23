@@ -11,28 +11,27 @@ import {
 import LevelPickerItem from '../components/LevelPickerItem';
 import Screen from '../components/Screen';
 import FormImagePicker from '../components/forms/FormImagePicker';
-import useLocation from '../hooks/useLocation';
-import locationsApi from '../api/locations';
+import questionsApi from '../api/questions';
 import useApi from '../hooks/useApi';
 import UploadScreen from './UploadScreen';
 
 const validationSchema = Yup.object().shape({
-  loc_name: Yup.string().required().min(1).label('Location'),
+  question: Yup.string().required().min(1).label('Question'),
+  location_id: Yup.number().required().min(1),
   user_id: Yup.number().required().min(1),
 });
 
-function LocationEditScreen({ navigation, route }) {
+function QuestionsEditScreen({ navigation, route }) {
   const user_id = route.params.user_id;
-  
-  const [uploadVisible, setUploadVisible] = useState(false);
-  const [progress, setProgress] = useState(0);
-
-  const handleSubmit = async (location, { resetForm }) => {
-    const result = await locationsApi.addLocation({ ...location });
+  const location_id = route.params.location_id;
+  console.log(location_id);
+  const handleSubmit = async (question, { resetForm }) => {
+    const result = await questionsApi.addQuestion({ ...question });
     if (!result.ok) {
-      return alert('Location was not saved');
+      return alert('Question was not saved');
     }
-    const getLocationsApi = useApi(locationsApi.getLocations);
+    const getQuestionsApi = useApi(questionsApi.getQuestions);
+
     resetForm();
   };
   return (
@@ -44,13 +43,14 @@ function LocationEditScreen({ navigation, route }) {
       /> */}
       <Form
         initialValues={{
-          loc_name: '',
-          user_id: user_id,
+          question: '',
+          user_id,
+          location_id,
         }}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        <FormField maxLength={255} name="loc_name" placeholder="Location" />
+        <FormField maxLength={255} name="question" placeholder="Question" />
         <SubmitButton title="Post" />
       </Form>
     </Screen>
@@ -62,4 +62,4 @@ const styles = StyleSheet.create({
     padding: 10,
   },
 });
-export default LocationEditScreen;
+export default QuestionsEditScreen;

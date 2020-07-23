@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-function ListQuestions({ question, locationId, user_id, question_id }) {
+function ListQuestions({ question, location_id, user_id, question_id }) {
   const navigation = useNavigation();
   return (
     <View style={styles.questPos}>
@@ -17,7 +17,7 @@ function ListQuestions({ question, locationId, user_id, question_id }) {
             size={50}
             color="dodgerblue"
             onPress={() => {
-              console.log(locationId);
+              console.log(location_id);
             }}
           />
         </View>
@@ -28,7 +28,7 @@ function ListQuestions({ question, locationId, user_id, question_id }) {
             color="#ff4500"
             onPress={() =>
               navigation.navigate('Add Report', {
-                locationId,
+                location_id,
                 user_id,
                 question_id,
               })

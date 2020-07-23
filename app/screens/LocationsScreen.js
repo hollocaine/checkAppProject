@@ -15,7 +15,7 @@ function LocationsScreen({ navigation }) {
   const getLocationsApi = useApi(locationsApi.getLocations);
 
   useEffect(() => {
-    getLocationsApi.request(1, 2, 3);
+    getLocationsApi.request();
   }, []);
 
   return (
@@ -32,6 +32,7 @@ function LocationsScreen({ navigation }) {
         keyExtractor={(location, index) => 'key' + index}
         renderItem={({ item }) => (
           <Holder
+            location_id={item.id}
             loc_name={item.loc_name}
             onPress={() => navigation.navigate(routes.QUESTIONS, item)}
           />
