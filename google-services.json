@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "108527672401",
+    "firebase_url": "https://check-1b0ca.firebaseio.com",
+    "project_id": "check-1b0ca",
+    "storage_bucket": "check-1b0ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108527672401:android:371b6a3613c1e9ab4f6c70",
+        "android_client_info": {
+          "package_name": "com.alanflynn.Check"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108527672401-f9tg4tvndpf665upiih7sc1psn4l0etp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABbzl6S51CQwSIzdq9Gia0jty1LVypT1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108527672401-f9tg4tvndpf665upiih7sc1psn4l0etp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, Image } from 'react-native';
 import * as Yup from 'yup';
-import jwtDecode from 'jwt-decode';
 
 import Screen from '../components/Screen';
 import {
@@ -20,6 +19,11 @@ const validationSchema = Yup.object().shape({
 
 function LoginScreen(props) {
   //Custom hook useAuth
+  useEffect(() => {
+    return () => {
+      console.log('cleaned up');
+    };
+  }, []);
   const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
   const handleSubmit = async ({ email, password }) => {

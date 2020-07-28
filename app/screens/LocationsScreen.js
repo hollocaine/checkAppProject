@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import Holder from '../components/Holder';
@@ -19,26 +19,29 @@ function LocationsScreen({ navigation }) {
   }, []);
 
   return (
-    <Screen style={styles.screen}>
-      {getLocationsApi.error && (
-        <>
-          <AppText>Could not get the locations</AppText>
-          <Button title="Retry" onPress={loadLocations} />
-        </>
-      )}
+    <>
       <ActivityIndicator visible={getLocationsApi.loading} />
-      <FlatList
-        data={getLocationsApi.data}
-        keyExtractor={(location, index) => 'key' + index}
-        renderItem={({ item }) => (
-          <Holder
-            location_id={item.id}
-            loc_name={item.loc_name}
-            onPress={() => navigation.navigate(routes.QUESTIONS, item)}
-          />
+      <Screen style={styles.screen}>
+        {getLocationsApi.error && (
+          <>
+            <AppText>Could not get the locations</AppText>
+            <Button title="Retry" onPress={loadLocations} />
+          </>
         )}
-      />
-    </Screen>
+
+        <FlatList
+          data={getLocationsApi.data}
+          keyExtractor={(location, index) => 'key' + index}
+          renderItem={({ item }) => (
+            <Holder
+              location_id={item.id}
+              loc_name={item.loc_name}
+              onPress={() => navigation.navigate(routes.QUESTIONS, item)}
+            />
+          )}
+        />
+      </Screen>
+    </>
   );
 }
 

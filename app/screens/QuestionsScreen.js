@@ -21,30 +21,23 @@ function QuestionsScreen({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      {hasQuestions ? (
-        <FlatList
-          data={getQuestionsApi.data}
-          renderItem={({ item }) =>
-            item.location_id === location_id.toString() && item.question !== ''
-              ? item.questions.map((v, i) => (
-                  <ListQuestions
-                    key={i}
-                    question={v.question}
-                    question_id={v.question_id}
-                    user_id={item.user_id}
-                    location_id={item.location_id}
-                  />
-                ))
-              : null
-          }
-          keyExtractor={(item, index) => 'key' + index}
-        />
-      ) : (
-        navigation.navigate(routes.QUESTION_EDIT, {
-          user_id: '1',
-          location_id: location_id,
-        })
-      )}
+      <FlatList
+        data={getQuestionsApi.data}
+        renderItem={({ item }) =>
+          item.location_id === location_id
+            ? item.questions.map((v, i) => (
+                <ListQuestions
+                  key={i}
+                  question={v.question}
+                  question_id={v.question_id}
+                  user_id={item.user_id}
+                  location_id={item.location_id}
+                />
+              ))
+            : null
+        }
+        keyExtractor={(item, index) => 'key' + index}
+      />
     </View>
   );
 }

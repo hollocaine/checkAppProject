@@ -7,7 +7,7 @@ const addQuestion = (question) => {
   const data = new FormData();
   data.append('location_id', question.location_id);
   data.append('user_id', question.user_id);
-  data.append('question', question.question);
+  data.append('questions', question.question);
 
   return client.post(endpoint, data);
 };

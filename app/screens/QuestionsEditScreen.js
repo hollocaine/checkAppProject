@@ -24,14 +24,12 @@ const validationSchema = Yup.object().shape({
 function QuestionsEditScreen({ navigation, route }) {
   const user_id = route.params.user_id;
   const location_id = route.params.location_id;
-  console.log(location_id);
   const handleSubmit = async (question, { resetForm }) => {
     const result = await questionsApi.addQuestion({ ...question });
     if (!result.ok) {
       return alert('Question was not saved');
     }
     const getQuestionsApi = useApi(questionsApi.getQuestions);
-
     resetForm();
   };
   return (

@@ -36,7 +36,7 @@ function AccountScreen({ navigation }) {
         <LocationItem
           title={user.name}
           subTitle={user.email}
-          image={require('../assets/mosh.jpg')}
+          image={require('../assets/alan.jpg')}
         />
       </View>
       <View style={styles.container}>

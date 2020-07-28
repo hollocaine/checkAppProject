@@ -23,7 +23,8 @@ const validationSchema = Yup.object().shape({
 
 function LocationEditScreen({ navigation, route }) {
   const user_id = route.params.user_id;
-  
+  const [sendToQuestion, setSendToQuestion] = useState(false);
+  const [locationId, setLocationId] = useState();
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
@@ -32,8 +33,11 @@ function LocationEditScreen({ navigation, route }) {
     if (!result.ok) {
       return alert('Location was not saved');
     }
-    const getLocationsApi = useApi(locationsApi.getLocations);
-    resetForm();
+    const location_id = result.data.id;
+    if (location_id > 0) {
+      setSendToQuestion(true);
+      setLocationId(location_id);
+    }
   };
   return (
     <Screen style={styles.container}>
@@ -42,17 +46,24 @@ function LocationEditScreen({ navigation, route }) {
         progress={progress}
         visible={uploadVisible}
       /> */}
-      <Form
-        initialValues={{
-          loc_name: '',
-          user_id: user_id,
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <FormField maxLength={255} name="loc_name" placeholder="Location" />
-        <SubmitButton title="Post" />
-      </Form>
+      {!sendToQuestion ? (
+        <Form
+          initialValues={{
+            loc_name: '',
+            user_id: user_id,
+          }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <FormField maxLength={255} name="loc_name" placeholder="Location" />
+          <SubmitButton title="Post" />
+        </Form>
+      ) : (
+        navigation.navigate('QuestionEdit', {
+          location_id: locationId,
+          user_id,
+        })
+      )}
     </Screen>
   );
 }
