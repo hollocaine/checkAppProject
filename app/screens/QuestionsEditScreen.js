@@ -48,7 +48,7 @@ function QuestionsEditScreen({ navigation, route }) {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        <FormField maxLength={255} name="question" placeholder="Question" />
+        <FormField maxLength={255} name="question" placeholder="Questions" />
         <SubmitButton title="Post" />
       </Form>
     </Screen>

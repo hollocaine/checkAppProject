@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import {
   Form,
@@ -9,12 +10,14 @@ import {
   SubmitButton,
 } from '../components/forms';
 import LevelPickerItem from '../components/LevelPickerItem';
+import AppButton from '../components/Button';
 import Screen from '../components/Screen';
 import FormImagePicker from '../components/forms/FormImagePicker';
 import useLocation from '../hooks/useLocation';
 import locationsApi from '../api/locations';
 import useApi from '../hooks/useApi';
 import UploadScreen from './UploadScreen';
+import colors from '../config/colors';
 
 const validationSchema = Yup.object().shape({
   loc_name: Yup.string().required().min(1).label('Location'),
@@ -27,6 +30,24 @@ function LocationEditScreen({ navigation, route }) {
   const [locationId, setLocationId] = useState();
   const [uploadVisible, setUploadVisible] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [fields, setFields] = useState([{ name: null }]);
+  const [value, setValue] = useState();
+  function handleAdd() {
+    const names = [...fields];
+    names.push({ name: null });
+    setFields(names);
+  }
+  function handleChange(i, event) {
+    const names = [...fields];
+    names[i].name = event;
+    setFields(names);
+  }
+
+  function handleRemove(i) {
+    const names = [...fields];
+    names.splice(i, 1);
+    setFields(names);
+  }
 
   const handleSubmit = async (location, { resetForm }) => {
     const result = await locationsApi.addLocation({ ...location });
@@ -47,17 +68,44 @@ function LocationEditScreen({ navigation, route }) {
         visible={uploadVisible}
       /> */}
       {!sendToQuestion ? (
-        <Form
-          initialValues={{
-            loc_name: '',
-            user_id: user_id,
-          }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <FormField maxLength={255} name="loc_name" placeholder="Location" />
-          <SubmitButton title="Post" />
-        </Form>
+        <View>
+          <View>
+            <MaterialCommunityIcons
+              color={colors.medium}
+              name="plus-circle"
+              size={50}
+              onPress={() => handleAdd()}
+            />
+          </View>
+          <Form
+            initialValues={{
+              name: [],
+              user_id: user_id,
+            }}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            {fields.map((field, idx, value) => {
+              return (
+                <View key={`${field}-${idx}`} style={styles.inputBox}>
+                  <FormField
+                    maxLength={255}
+                    name={'name' + idx}
+                    placeholder="Location"
+                    onChangeText={(e) => handleChange(idx, e)}
+                  />
+                  <MaterialCommunityIcons
+                    color={colors.medium}
+                    name="close-circle"
+                    size={50}
+                    onPress={() => handleRemove(idx)}
+                  />
+                </View>
+              );
+            })}
+            <SubmitButton title="Post" />
+          </Form>
+        </View>
       ) : (
         navigation.navigate('QuestionEdit', {
           location_id: locationId,
@@ -71,6 +119,13 @@ function LocationEditScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  inputBox: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    marginLeft: 20,
   },
 });
 export default LocationEditScreen;

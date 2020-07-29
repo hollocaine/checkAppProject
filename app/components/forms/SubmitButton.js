@@ -10,11 +10,4 @@ function SubmitButton({ title }) {
   return <Button title={title} onPress={handleSubmit} />;
 }
 
-const styles = StyleSheet.create({
-  setSize: {
-    width: '50%',
-    backgroundColor: 'pink',
-    color: 'green',
-  },
-});
 export default SubmitButton;

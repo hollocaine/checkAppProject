@@ -14,7 +14,6 @@ import useApi from '../hooks/useApi';
 function ReportsScreen({ navigation }) {
   const getReportsApi = useApi(reportsApi.getReports);
  
-
   useEffect(() => {
     getReportsApi.request();
   }, []);

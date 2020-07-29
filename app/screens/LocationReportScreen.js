@@ -7,6 +7,7 @@ import {
   FormField,
   FormPicker as Picker,
   SubmitButton,
+  View,
 } from '../components/forms';
 import LevelPickerItem from '../components/LevelPickerItem';
 import Screen from '../components/Screen';

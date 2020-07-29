@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Notifications } from 'expo';
-import { Platform } from 'react-native';
 import * as Permissions from 'expo-permissions';
 
 import expoPushTokensApi from '../api/expoPushTokens';
@@ -15,7 +14,6 @@ export default useNotifications = (notificationListener) => {
     try {
       const permission = await Permissions.askAsync(Permissions.NOTIFICATIONS);
       if (!permission.granted) return;
-
       const token = await Notifications.getExpoPushTokenAsync();
       //Token is pushed to the server
       expoPushTokensApi.register(token);
