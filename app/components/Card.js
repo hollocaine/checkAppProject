@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'react-native-expo-image-cache';
 import Button from '../components/Button';
 import Text from './Text';
@@ -22,14 +23,13 @@ function Card({ title, description, level, imageUrl, onPress, thumbnailUrl }) {
             uri={imageUrl}
           />
         )}
-
-        <Button
-          title="Show Image"
+        <MaterialCommunityIcons
+          name={showImage ? 'close-circle' : 'image'}
+          size={35}
           onPress={() =>
             showImage === false ? setShowImage(true) : setShowImage(false)
           }
         />
-
         <View style={styles.detailsContainer}>
           <Text style={styles.title} numberOfLines={1}>
             {title}

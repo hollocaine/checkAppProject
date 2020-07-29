@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Holder from '../components/Holder';
 import colors from '../config/colors';
@@ -20,29 +20,35 @@ function QuestionsScreen({ route, navigation }) {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        data={getQuestionsApi.data}
-        renderItem={({ item }) =>
-          item.location_id === location_id
-            ? item.questions.map((v, i) => (
-                <ListQuestions
-                  key={i}
-                  question={v.question}
-                  question_id={v.question_id}
-                  user_id={item.user_id}
-                  location_id={item.location_id}
-                />
-              ))
-            : null
-        }
-        keyExtractor={(item, index) => 'key' + index}
-      />
-    </View>
+    <ImageBackground
+      source={require('../assets/extinguisher.png')}
+      style={styles.image}
+    >
+      <View style={styles.container}>
+        <FlatList
+          data={getQuestionsApi.data}
+          renderItem={({ item }) =>
+            item.location_id === location_id
+              ? item.questions.map((v, i) => (
+                  <ListQuestions
+                    key={i}
+                    question={v.question}
+                    question_id={v.question_id}
+                    user_id={item.user_id}
+                    location_id={item.location_id}
+                  />
+                ))
+              : null
+          }
+          keyExtractor={(item, index) => 'key' + index}
+        />
+      </View>
+    </ImageBackground>
   );
 }
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
     paddingTop: 10,
     alignItems: 'center',
