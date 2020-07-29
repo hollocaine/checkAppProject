@@ -37,8 +37,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonsContainer: {
+    flexDirection: 'row',
     padding: 20,
-    width: '100%',
+    justifyContent: 'space-between',
   },
   logo: {
     width: 300,
