@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { StyleSheet, View, Text } from 'react-native';
 function ReportDetailsScreen(props) {
   return (
     <View>

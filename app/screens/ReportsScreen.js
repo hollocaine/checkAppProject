@@ -13,7 +13,6 @@ import useApi from '../hooks/useApi';
 
 function ReportsScreen({ navigation }) {
   const getReportsApi = useApi(reportsApi.getReports);
- 
   useEffect(() => {
     getReportsApi.request();
   }, []);
@@ -37,7 +36,7 @@ function ReportsScreen({ navigation }) {
               description={item.description}
               level={item.level}
               imageUrl={item.images[0].url}
-              onPress={() => navigation.navigate(routes.REPORT_DETAILS, item)}
+              onPress={() => navigation.navigate(routes.REPORTS_DETAILS, item)}
               thumbnailUrl={item.images[0].thumbnailUrl}
             />
           )}

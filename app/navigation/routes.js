@@ -3,7 +3,7 @@ export default Object.freeze({
   LOCATION_EDIT: 'LocationEdit',
   REPORTS: 'Reports',
   REPORTS_EDIT: 'ReportsEdit',
-  REPORTS_DETAILS: 'ReportsDetail',
+  REPORTS_DETAILS: 'ReportDetails',
   QUESTIONS: 'Questions',
   QUESTION_DETAIL: 'QuestionDetail',
   QUESTION_EDIT: 'QuestionEdit',

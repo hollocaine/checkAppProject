@@ -9,14 +9,7 @@ import {
   FormPicker as Picker,
   SubmitButton,
 } from '../components/forms';
-import LevelPickerItem from '../components/LevelPickerItem';
-import AppButton from '../components/Button';
-import Screen from '../components/Screen';
-import FormImagePicker from '../components/forms/FormImagePicker';
-import useLocation from '../hooks/useLocation';
 import locationsApi from '../api/locations';
-import useApi from '../hooks/useApi';
-import UploadScreen from './UploadScreen';
 import colors from '../config/colors';
 
 const validationSchema = Yup.object().shape({
@@ -90,7 +83,7 @@ function LocationEditScreen({ navigation, route }) {
                 <View key={`${field}-${idx}`} style={styles.inputBox}>
                   <FormField
                     maxLength={255}
-                    name={'name' + idx}
+                    name={'name[' + idx + ']'}
                     placeholder="Location"
                     onChangeText={(e) => handleChange(idx, e)}
                   />

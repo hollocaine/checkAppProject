@@ -8,12 +8,9 @@ import {
   FormPicker as Picker,
   SubmitButton,
 } from '../components/forms';
-import LevelPickerItem from '../components/LevelPickerItem';
 import Screen from '../components/Screen';
-import FormImagePicker from '../components/forms/FormImagePicker';
 import questionsApi from '../api/questions';
 import useApi from '../hooks/useApi';
-import UploadScreen from './UploadScreen';
 
 const validationSchema = Yup.object().shape({
   question: Yup.string().required().min(1).label('Question'),

@@ -3,15 +3,29 @@ import { View, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Image } from 'react-native-expo-image-cache';
 import Button from '../components/Button';
+import Icon from '../components/Icon';
 import Text from './Text';
 import colors from '../config/colors';
 import { useRoute } from '@react-navigation/native';
 
 function Card({ title, description, level, imageUrl, onPress, thumbnailUrl }) {
   const [showImage, setShowImage] = useState(false);
-  const route = useRoute();
-  const is_report = false;
-  if (route.name === 'Reports') is_report ? true : false;
+  let icon = '';
+  let iconColor = '';
+  switch (level) {
+    case 1:
+      icon = 'arrow-up-bold-circle-outline';
+      iconColor = '#fc5c65';
+      break;
+    case 2:
+      icon = 'alert-circle';
+      iconColor = '#fd9644';
+      break;
+    case 3:
+      icon = 'arrow-down-circle';
+      iconColor = '#26de81';
+      break;
+  }
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <View style={styles.card}>
@@ -38,7 +52,7 @@ function Card({ title, description, level, imageUrl, onPress, thumbnailUrl }) {
             {description}
           </Text>
           <Text style={styles.level} numberOfLines={1}>
-            {level}
+            <MaterialCommunityIcons color={iconColor} name={icon} size={20} />
           </Text>
         </View>
       </View>
