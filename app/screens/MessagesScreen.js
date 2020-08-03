@@ -12,14 +12,13 @@ const initialMessages = [
   {
     id: 1,
     title: 'Alan Balan',
-    description: 'Hey! Is this item still available?',
+    description: 'Need to check the main office',
     image: require('../assets/alan.jpg'),
   },
   {
     id: 2,
     title: 'Alan Balan',
-    description:
-      "I'm interested in this item. When will you be able to post it?",
+    description: 'Petrol spillage in main car park',
     image: require('../assets/alan.jpg'),
   },
 ];

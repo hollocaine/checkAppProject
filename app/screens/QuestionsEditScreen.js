@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import {
   Form,
@@ -10,6 +11,7 @@ import {
 } from '../components/forms';
 import Screen from '../components/Screen';
 import questionsApi from '../api/questions';
+import colors from '../config/colors';
 import useApi from '../hooks/useApi';
 
 const validationSchema = Yup.object().shape({
@@ -21,6 +23,24 @@ const validationSchema = Yup.object().shape({
 function QuestionsEditScreen({ navigation, route }) {
   const user_id = route.params.user_id;
   const location_id = route.params.location_id;
+  const [fields, setFields] = useState([{ name: null }]);
+
+  function handleAdd() {
+    const questions = [...fields];
+    questions.push({ question: null });
+    setFields(questions);
+  }
+  function handleChange(i, event) {
+    const questions = [...fields];
+    questions[i].question = event;
+    setFields(questions);
+  }
+
+  function handleRemove(i) {
+    const questions = [...fields];
+    questions.splice(i, 1);
+    setFields(questions);
+  }
   const handleSubmit = async (question, { resetForm }) => {
     const result = await questionsApi.addQuestion({ ...question });
     if (!result.ok) {
@@ -36,6 +56,14 @@ function QuestionsEditScreen({ navigation, route }) {
         progress={progress}
         visible={uploadVisible}
       /> */}
+      <View>
+        <MaterialCommunityIcons
+          color={colors.medium}
+          name="plus-circle"
+          size={50}
+          onPress={() => handleAdd()}
+        />
+      </View>
       <Form
         initialValues={{
           question: '',
@@ -45,7 +73,25 @@ function QuestionsEditScreen({ navigation, route }) {
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        <FormField maxLength={255} name="question" placeholder="Questions" />
+        {fields.map((field, idx, value) => {
+          return (
+            <View key={`${field}-${idx}`} style={styles.inputBox}>
+              <FormField
+                maxLength={255}
+                name={'name[' + idx + ']'}
+                placeholder="Question"
+                value={value}
+                onChangeText={(e) => handleChange(idx, e)}
+              />
+              <MaterialCommunityIcons
+                color={colors.medium}
+                name="close-circle"
+                size={50}
+                onPress={() => handleRemove(idx)}
+              />
+            </View>
+          );
+        })}
         <SubmitButton title="Post" />
       </Form>
     </Screen>
@@ -55,6 +101,13 @@ function QuestionsEditScreen({ navigation, route }) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  inputBox: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    marginLeft: 20,
   },
 });
 export default QuestionsEditScreen;

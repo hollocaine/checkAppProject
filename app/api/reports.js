@@ -3,14 +3,15 @@ const endpoint = '/reports';
 
 const getReports = () => client.get(endpoint);
 
-const addReport = (report) => {
+const addReport = (report, loc_level, date) => {
   const data = new FormData();
   data.append('title', report.title);
   data.append('description', report.description);
   data.append('user_id', report.user_id);
   data.append('location_id', report.location_id);
-  data.append('question_id', report.question_id);
-  data.append('level', report.level);
+  data.append('question_id', Number(report.question_id));
+  data.append('date', date);
+  data.append('level', loc_level);
   report.images.forEach((image, index) =>
     data.append('images', {
       name: 'image' + index,

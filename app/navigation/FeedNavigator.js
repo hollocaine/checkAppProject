@@ -7,6 +7,7 @@ import LocationReport from '../screens/LocationReportScreen';
 import ReportsScreen from '../screens/ReportsScreen';
 import QuestionsEdit from '../screens/QuestionsEditScreen';
 import ReportDetailsScreen from '../screens/ReportDetailsScreen';
+import CalendarScreen from '../screens/CalendarScreen';
 const Stack = createStackNavigator();
 
 const FeedNavigator = () => (
@@ -18,6 +19,7 @@ const FeedNavigator = () => (
     <Stack.Screen name="LocationDetails" component={LocationDetailsScreen} />
     <Stack.Screen name="ReportDetails" component={ReportDetailsScreen} />
     <Stack.Screen name="QuestionEdit" component={QuestionsEdit} />
+    <Stack.Screen name="Calendar" component={CalendarScreen} />
   </Stack.Navigator>
 );
 

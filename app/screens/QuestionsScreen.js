@@ -3,18 +3,13 @@ import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Holder from '../components/Holder';
 import colors from '../config/colors';
-import routes from '../navigation/routes';
-import Screen from '../components/Screen';
 import ListQuestions from '../components/lists/ListQuestions';
 import questionsApi from '../api/questions';
 import useApi from '../hooks/useApi';
-import { connect } from 'formik';
-import { cos } from 'react-native-reanimated';
 
-function QuestionsScreen({ route, navigation }) {
+function QuestionsScreen({ route }) {
   const location_id = route.params.id;
   const getQuestionsApi = useApi(questionsApi.getQuestions);
-  const [hasQuestions, setHasQuestions] = useState(true);
   useEffect(() => {
     getQuestionsApi.request();
   }, []);

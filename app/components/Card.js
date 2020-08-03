@@ -12,6 +12,7 @@ function Card({ title, description, level, imageUrl, onPress, thumbnailUrl }) {
   const [showImage, setShowImage] = useState(false);
   let icon = '';
   let iconColor = '';
+  console.log(level);
   switch (level) {
     case 1:
       icon = 'arrow-up-bold-circle-outline';

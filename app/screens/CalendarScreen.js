@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { CalendarList } from 'react-native-calendars';
 
-const CalanderScreen = ({ navigation }) => {
+import routes from '../navigation/routes';
+
+const CalendarScreen = ({ navigation }) => {
+  const [date, setDate] = useState(null);
   return (
     <View style={styles.screen}>
       <CalendarList
@@ -10,6 +13,7 @@ const CalanderScreen = ({ navigation }) => {
         onVisibleMonthsChange={(months) => {
           console.log('now these months are visible', months);
         }}
+        onDayPress={(day) => navigation.navigate(routes.LOCATION_REPORT, day)}
         // Max amount of months allowed to scroll to the past. Default = 50
         pastScrollRange={50}
         // Max amount of months allowed to scroll to the future. Default = 50
@@ -30,4 +34,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default CalanderScreen;
+export default CalendarScreen;
