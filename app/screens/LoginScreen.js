@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, ImageBackground } from 'react-native';
 import * as Yup from 'yup';
 
 import Screen from '../components/Screen';
@@ -19,11 +19,7 @@ const validationSchema = Yup.object().shape({
 
 function LoginScreen(props) {
   //Custom hook useAuth
-  useEffect(() => {
-    return () => {
-      console.log('cleaned up');
-    };
-  }, []);
+
   const auth = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
   const handleSubmit = async ({ email, password }) => {
@@ -33,45 +29,57 @@ function LoginScreen(props) {
     auth.logIn(result.data);
   };
   return (
-    <Screen style={styles.container}>
-      {/* <Image style={styles.logo} source={require('../assets/logo-red.png')} /> */}
+    <ImageBackground
+      source={require('../assets/location.png')}
+      style={styles.image}
+      blurRadius={1}
+    >
+      <Screen style={styles.container}>
+        {/* <Image style={styles.logo} source={require('../assets/logo-red.png')} /> */}
 
-      <Form
-        initialValues={{ email: '', password: '' }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <ErrorMessage
-          error="Invalid email and/or password"
-          visible={loginFailed}
-        />
-        <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="email"
-          keyboardType="email-address"
-          name="email"
-          placeholder="Email"
-          textContentType="emailAddress"
-        />
-        <FormField
-          autoCapitalize="none"
-          autoCorrect={false}
-          icon="lock"
-          name="password"
-          placeholder="Password"
-          secureTextEntry
-          textContentType="password"
-        />
-        <SubmitButton title="Login" />
-      </Form>
-    </Screen>
+        <Form
+          initialValues={{ email: '', password: '' }}
+          onSubmit={handleSubmit}
+          validationSchema={validationSchema}
+        >
+          <ErrorMessage
+            error="Invalid email and/or password"
+            visible={loginFailed}
+          />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="email"
+            keyboardType="email-address"
+            name="email"
+            placeholder="Email"
+            textContentType="emailAddress"
+          />
+          <FormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            name="password"
+            placeholder="Password"
+            secureTextEntry
+            textContentType="password"
+          />
+          <SubmitButton title="Login" />
+        </Form>
+      </Screen>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    backgroundColor: '#e9f8f9',
   },
   logo: {
     width: 80,

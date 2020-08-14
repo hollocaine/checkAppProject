@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import * as Yup from 'yup';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
+import moment from 'moment';
 
 import {
   Form,
@@ -46,9 +46,11 @@ const levels = [
 ];
 
 function LocationReportScreen({ route, navigation }) {
+  const now = moment(Date.now());
   const date = route.params.dateString;
-  const location_id = route.params.location_id;
+  const location_id = route.params.id;
   const question_id = route.params.question_id;
+  const loc_name = route.params.loc_name;
   const user_id = route.params.user_id;
   const [reportId, setReportId] = useState();
   const [hasDate, setHasDate] = useState(false);
@@ -61,8 +63,10 @@ function LocationReportScreen({ route, navigation }) {
       setHasDate(true);
     }
   }, [newDate, hasDate, isFocused]);
+
   const handleSubmit = async (report, { resetForm }) => {
     const loc_level = report.level.value;
+
     const result = await reportsApi.addReport(
       { ...report },
       loc_level,
@@ -72,20 +76,27 @@ function LocationReportScreen({ route, navigation }) {
       return alert('Report was not saved');
     }
     const report_id = result.data.id;
+    console.log(report_id);
+
     if (report_id > 0) {
       setReportId(reportId);
     }
     resetForm();
   };
   return (
+    // <KeyboardAvoidingView
+    //   behavior="position"
+    //   keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 100}
+    //   style={{ flex: 1 }}
+    // >
     <Screen style={styles.container}>
       <Form
         initialValues={{
           location_id,
-          date: null,
+          date: now,
           question_id,
           user_id,
-          title: '',
+          loc_name,
           description: '',
           level: null,
           images: [],
@@ -107,7 +118,14 @@ function LocationReportScreen({ route, navigation }) {
             value={newDate}
           />
         )}
-        <FormField maxLength={255} name="title" placeholder="Title" />
+        <FormField maxLength={255} name="title" placeholder={loc_name} />
+        <FormField
+          maxLength={255}
+          multiline
+          name="description"
+          numberOfLines={3}
+          placeholder="Description"
+        />
         <Picker
           items={levels}
           name="level"
@@ -116,16 +134,10 @@ function LocationReportScreen({ route, navigation }) {
           placeholder="Level"
           width="50%"
         />
-        <FormField
-          maxLength={255}
-          multiline
-          name="description"
-          numberOfLines={3}
-          placeholder="Description"
-        />
         <SubmitButton title="Post" />
       </Form>
     </Screen>
+    // </KeyboardAvoidingView>
   );
 }
 

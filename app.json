@@ -21,6 +21,7 @@
     "ios": {
       "supportsTablet": true
     },
-    "description": "An app with a checklist fire safety compliance."
+    "description": "An app with a checklist fire safety compliance.",
+    "githubUrl": "https://github.com/hollocaine/firesafe"
   }
 }

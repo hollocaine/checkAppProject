@@ -2,7 +2,7 @@ import { create } from 'apisauce';
 import cache from '../utility/cache';
 import authStorage from '../auth/storage';
 
-const apiClient = create({ baseURL: 'http://192.168.68.103:9000/api' });
+const apiClient = create({ baseURL: 'http://192.168.68.110:9000/api' });
 apiClient.addAsyncRequestTransform(async (request) => {
   //This is handled server middleware auth.js
   const authToken = await authStorage.getToken();

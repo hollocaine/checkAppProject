@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormikContext } from 'formik';
 
+import { StyleSheet, View } from 'react-native';
 import TextInput from '../TextInput';
 import ErrorMessage from './ErrorMessage';
 
 function AppFormField({ name, width, date, ...otherProps }) {
+  const [hasArr, setHasArr] = useState(false);
+  const [dataArr, setDataArr] = useState([{}]);
+  useEffect(() => {
+    if (typeof otherProps.values === 'object') {
+      setHasArr(true);
+    }
+  }, []);
+
   const {
     setFieldTouched,
     setFieldValue,
@@ -15,11 +24,11 @@ function AppFormField({ name, width, date, ...otherProps }) {
 
   return (
     <>
+      {/* {!hasArr ? ( */}
       <TextInput
         onBlur={() => setFieldTouched(name)}
         onChangeText={(text) => setFieldValue(name, text)}
         date={date}
-        value={values[name]}
         width={width}
         {...otherProps}
       />

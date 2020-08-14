@@ -17,13 +17,13 @@ function WelcomeScreen({ navigation }) {
       </View>
       <View style={styles.buttonsContainer}>
         <Button
-          title="Login"
-          onPress={() => navigation.navigate(routes.LOGIN)}
-        />
-        <Button
           title="Register"
           color="secondary"
           onPress={() => navigation.navigate(routes.REGISTER)}
+        />
+        <Button
+          title="Login"
+          onPress={() => navigation.navigate(routes.LOGIN)}
         />
       </View>
     </ImageBackground>
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   tagline: {
     fontSize: 25,
     fontWeight: '600',
-    paddingVertical: 20,
+    paddingVertical: 50,
   },
 });
 

@@ -1,18 +1,15 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet, View, ScrollView } from 'react-native';
 import * as Yup from 'yup';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-import {
-  Form,
-  FormField,
-  FormPicker as Picker,
-  SubmitButton,
-} from '../components/forms';
+import Button from '../components/Button';
+import TextInput from '../components/TextInput';
 import Screen from '../components/Screen';
 import questionsApi from '../api/questions';
 import colors from '../config/colors';
-import useApi from '../hooks/useApi';
+
+//Note: Not using validation Schema here as it is not using Formik below.
 
 const validationSchema = Yup.object().shape({
   question: Yup.string().required().min(1).label('Question'),
@@ -21,18 +18,16 @@ const validationSchema = Yup.object().shape({
 });
 
 function QuestionsEditScreen({ navigation, route }) {
+  const scrollView = useRef();
   const user_id = route.params.user_id;
   const location_id = route.params.location_id;
-  const [fields, setFields] = useState([{ name: null }]);
+  const [fields, setFields] = useState([
+    { name: '', text: '', user_id, location_id },
+  ]);
 
   function handleAdd() {
     const questions = [...fields];
-    questions.push({ question: null });
-    setFields(questions);
-  }
-  function handleChange(i, event) {
-    const questions = [...fields];
-    questions[i].question = event;
+    questions.push({ ...questions, user_id, location_id });
     setFields(questions);
   }
 
@@ -41,21 +36,39 @@ function QuestionsEditScreen({ navigation, route }) {
     questions.splice(i, 1);
     setFields(questions);
   }
-  const handleSubmit = async (question, { resetForm }) => {
-    const result = await questionsApi.addQuestion({ ...question });
+
+  function handleChange(i, event) {
+    const questions = [...fields];
+    questions[i].text = event.nativeEvent.text;
+    setFields(questions);
+  }
+
+  const handleSubmit = async () => {
+    const questions = [...fields];
+
+    //Note: Logging output in the questionsApi now to validate it is being sent through.
+    const result = await questionsApi.addQuestion({
+      ...questions,
+      user_id,
+      location_id,
+    });
+    //Note: The result is coming back as a fail, probably something to do with the expected input to the api endpoint
     if (!result.ok) {
       return alert('Question was not saved');
+    } else {
+      return alert('Question was saved');
     }
-    const getQuestionsApi = useApi(questionsApi.getQuestions);
-    resetForm();
   };
+  // const handleSubmit = async (question, { resetForm }) => {
+  //   const result = await questionsApi.addQuestion({ ...question });
+  //   if (!result.ok) {
+  //     return alert('Question was not saved');
+  //   }
+  //   const getQuestionsApi = useApi(questionsApi.getQuestions);
+  //   resetForm();
+  // };
   return (
     <Screen style={styles.container}>
-      {/* <UploadScreen
-        onDone={() => setUploadVisible(false)}
-        progress={progress}
-        visible={uploadVisible}
-      /> */}
       <View>
         <MaterialCommunityIcons
           color={colors.medium}
@@ -64,24 +77,19 @@ function QuestionsEditScreen({ navigation, route }) {
           onPress={() => handleAdd()}
         />
       </View>
-      <Form
-        initialValues={{
-          question: '',
-          user_id,
-          location_id,
-        }}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
+      <ScrollView
+        ref={scrollView}
+        vertical
+        onContentSizeChange={() => scrollView.current.scrollToEnd()}
       >
         {fields.map((field, idx, value) => {
           return (
             <View key={`${field}-${idx}`} style={styles.inputBox}>
-              <FormField
-                maxLength={255}
-                name={'name[' + idx + ']'}
+              <TextInput
+                name={'question[' + idx + ']'}
+                defaultValue={field.text}
                 placeholder="Question"
-                value={value}
-                onChangeText={(e) => handleChange(idx, e)}
+                onChange={(e) => handleChange(idx, e)}
               />
               <MaterialCommunityIcons
                 color={colors.medium}
@@ -92,8 +100,8 @@ function QuestionsEditScreen({ navigation, route }) {
             </View>
           );
         })}
-        <SubmitButton title="Post" />
-      </Form>
+        <Button title="Post" onPress={handleSubmit} />
+      </ScrollView>
     </Screen>
   );
 }
@@ -106,7 +114,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    width: '90%',
+    width: '88%',
     marginLeft: 20,
   },
 });

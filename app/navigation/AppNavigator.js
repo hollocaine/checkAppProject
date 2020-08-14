@@ -10,11 +10,14 @@ import FeedNavigator from './FeedNavigator';
 import LocationEditScreen from '../screens/LocationEditScreen';
 import NewLocationButton from './NewLocationButton';
 import routes from './routes';
+import useAuth from '../auth/useAuth';
 import useNotifications from '../hooks/useNotifications';
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => {
+  const auth = useAuth();
+  const userId = auth.user.user_id;
   useNotifications();
   return (
     <Tab.Navigator>
@@ -34,7 +37,7 @@ const AppNavigator = () => {
           tabBarButton: () => (
             <NewLocationButton
               onPress={() =>
-                navigation.navigate(routes.LOCATION_EDIT, { user_id: '1' })
+                navigation.navigate(routes.LOCATION_EDIT, { user_id: userId })
               }
             />
           ),

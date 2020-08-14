@@ -11,7 +11,6 @@ import {
 import Screen from '../components/Screen';
 import locationsApi from '../api/locations';
 
-
 const validationSchema = Yup.object().shape({
   loc_name: Yup.string().required().min(1).label('Location'),
   user_id: Yup.number().required().min(1),
@@ -24,10 +23,10 @@ function LocationEditScreen({ navigation, route }) {
 
   const handleSubmit = async (location, { resetForm }) => {
     const result = await locationsApi.addLocation({ ...location });
-
     if (!result.ok) {
       return alert('Location was not saved');
     }
+    resetForm({ location: '' });
     const location_id = result.data.id;
     if (location_id > 0) {
       setSendToQuestionEdit(true);

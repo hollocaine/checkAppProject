@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ImageBackground } from 'react-native';
 import * as Yup from 'yup';
 
 import Screen from '../components/Screen';
@@ -26,7 +26,6 @@ function RegisterScreen() {
       console.log('cleaned up');
     };
   }, []);
-
   const handleSubmit = async (userInfo) => {
     //Using the userInfo object allows for adding in more registration fields
     const result = await registerApi.request(userInfo);
@@ -45,43 +44,48 @@ function RegisterScreen() {
     );
     auth.logIn(authToken);
   };
-
   return (
     <>
       <ActivityIndicator visible={registerApi.loading || loginApi.loading} />
-      <Screen style={styles.container}>
-        <Form
-          initialValues={{ name: '', email: '', password: '' }}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}
-        >
-          <FormField
-            autoCorrect={false}
-            icon="account"
-            name="name"
-            placeholder="Name"
-          />
-          <FormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="email"
-            keyboardType="email-address"
-            name="email"
-            placeholder="Email"
-            textContentType="emailAddress"
-          />
-          <FormField
-            autoCapitalize="none"
-            autoCorrect={false}
-            icon="lock"
-            name="password"
-            placeholder="Password"
-            secureTextEntry
-            textContentType="password"
-          />
-          <SubmitButton title="Register" />
-        </Form>
-      </Screen>
+      <ImageBackground
+        source={require('../assets/registration.png')}
+        style={styles.image}
+        blurRadius={2}
+      >
+        <Screen style={styles.container}>
+          <Form
+            initialValues={{ name: '', email: '', password: '' }}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}
+          >
+            <FormField
+              autoCorrect={false}
+              icon="account"
+              name="name"
+              placeholder="Name"
+            />
+            <FormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="email"
+              keyboardType="email-address"
+              name="email"
+              placeholder="Email"
+              textContentType="emailAddress"
+            />
+            <FormField
+              autoCapitalize="none"
+              autoCorrect={false}
+              icon="lock"
+              name="password"
+              placeholder="Password"
+              secureTextEntry
+              textContentType="password"
+            />
+            <SubmitButton title="Register" />
+          </Form>
+        </Screen>
+      </ImageBackground>
     </>
   );
 }
@@ -89,6 +93,12 @@ function RegisterScreen() {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
+  },
+  image: {
+    flex: 1,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    backgroundColor: '#e9f8f9',
   },
 });
 

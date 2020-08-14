@@ -9,7 +9,7 @@ const addReport = (report, loc_level, date) => {
   data.append('description', report.description);
   data.append('user_id', report.user_id);
   data.append('location_id', report.location_id);
-  data.append('question_id', Number(report.question_id));
+  //data.append('question_id', Number(report.question_id));
   data.append('date', date);
   data.append('level', loc_level);
   report.images.forEach((image, index) =>

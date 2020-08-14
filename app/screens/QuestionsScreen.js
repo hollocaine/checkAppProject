@@ -3,16 +3,36 @@ import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Holder from '../components/Holder';
 import colors from '../config/colors';
+import routes from '../navigation/routes';
 import ListQuestions from '../components/lists/ListQuestions';
 import questionsApi from '../api/questions';
 import useApi from '../hooks/useApi';
 
-function QuestionsScreen({ route }) {
+function QuestionsScreen({ route, navigation }) {
   const location_id = route.params.id;
+  const userId = route.params.user_id;
   const getQuestionsApi = useApi(questionsApi.getQuestions);
   useEffect(() => {
     getQuestionsApi.request();
   }, []);
+  useEffect(() => {
+    return () => {
+      console.log('cleaned up');
+    };
+  }, []);
+  let data = [];
+  if (getQuestionsApi.data.length === 0) {
+    navigation.navigate(routes.QUESTION_EDIT, {
+      location_id,
+      userId,
+    });
+  } else {
+    for (let index = 0; index < getQuestionsApi.data.length; index++) {
+      if (getQuestionsApi.data[index].user_id === userId) {
+        data.push(getQuestionsApi.data[index]);
+      }
+    }
+  }
 
   return (
     <ImageBackground
