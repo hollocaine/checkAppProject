@@ -16,7 +16,7 @@ function ReportsScreen({ navigation }) {
   useEffect(() => {
     getReportsApi.request();
   }, []);
-
+  console.log(getReportsApi);
   return (
     <>
       <ActivityIndicator visible={getReportsApi.loading} />
@@ -35,6 +35,7 @@ function ReportsScreen({ navigation }) {
               title={item.title}
               description={item.description}
               level={item.level}
+              date={item.date}
               imageUrl={item.images[0].url}
               onPress={() => navigation.navigate(routes.REPORTS_DETAILS, item)}
               thumbnailUrl={item.images[0].thumbnailUrl}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import * as Yup from 'yup';
 
@@ -33,6 +33,11 @@ function LocationEditScreen({ navigation, route }) {
       setLocationId(location_id);
     }
   };
+  useEffect(() => {
+    return () => {
+      console.log('cleaned up');
+    };
+  }, []);
   return (
     <Screen style={styles.container}>
       {!sendToQuestionEdit ? (

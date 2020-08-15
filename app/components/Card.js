@@ -8,7 +8,15 @@ import Text from './Text';
 import colors from '../config/colors';
 import { useRoute } from '@react-navigation/native';
 
-function Card({ title, description, level, imageUrl, onPress, thumbnailUrl }) {
+function Card({
+  title,
+  description,
+  level,
+  imageUrl,
+  onPress,
+  thumbnailUrl,
+  date,
+}) {
   const [showImage, setShowImage] = useState(false);
   let icon = '';
   let iconColor = '';
@@ -50,6 +58,9 @@ function Card({ title, description, level, imageUrl, onPress, thumbnailUrl }) {
           </Text>
           <Text style={styles.description} numberOfLines={6}>
             {description}
+          </Text>
+          <Text style={styles.description} numberOfLines={6}>
+            Expiry Date: {date}
           </Text>
           <Text style={styles.level} numberOfLines={1}>
             <MaterialCommunityIcons color={iconColor} name={icon} size={20} />

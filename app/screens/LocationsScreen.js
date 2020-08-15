@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  FlatList,
-  StyleSheet,
-  ImageBackground,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { FlatList, StyleSheet, ImageBackground } from 'react-native';
 
 import Holder from '../components/Holder';
 import AppText from '../components/Text';
@@ -44,31 +39,29 @@ function LocationsScreen({ navigation }) {
         source={require('../assets/location.png')}
         style={styles.image}
       >
-        <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-          <Screen style={styles.screen}>
-            {getLocationsApi.error && (
-              <>
-                <AppText>Could not get the locations</AppText>
-                <Button title="Retry" onPress={getLocationsApi.request} />
-              </>
-            )}
+        <Screen style={styles.screen}>
+          {getLocationsApi.error && (
+            <>
+              <AppText>Could not get the locations</AppText>
+              <Button title="Retry" onPress={getLocationsApi.request} />
+            </>
+          )}
 
-            <FlatList
-              data={data}
-              keyExtractor={(location, index) => 'key' + index}
-              renderItem={({ item }) => (
-                <Holder
-                  user_id={userId}
-                  location_id={item.id}
-                  loc_name={item.loc_name}
-                  onPress={() =>
-                    navigation.navigate(routes.LOCATION_REPORT, item)
-                  }
-                />
-              )}
-            />
-          </Screen>
-        </KeyboardAvoidingView>
+          <FlatList
+            data={data}
+            keyExtractor={(location, index) => 'key' + index}
+            renderItem={({ item }) => (
+              <Holder
+                user_id={userId}
+                location_id={item.id}
+                loc_name={item.loc_name}
+                onPress={() =>
+                  navigation.navigate(routes.LOCATION_REPORT, item)
+                }
+              />
+            )}
+          />
+        </Screen>
       </ImageBackground>
     </>
   );

@@ -45,13 +45,12 @@ function QuestionsEditScreen({ navigation, route }) {
 
   const handleSubmit = async () => {
     const questions = [...fields];
-
+    console.log(questions);
     //Note: Logging output in the questionsApi now to validate it is being sent through.
     const result = await questionsApi.addQuestion({
       ...questions,
-      user_id,
-      location_id,
     });
+    console.log(result);
     //Note: The result is coming back as a fail, probably something to do with the expected input to the api endpoint
     if (!result.ok) {
       return alert('Question was not saved');

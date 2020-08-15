@@ -28,6 +28,11 @@ function LoginScreen(props) {
     setLoginFailed(false);
     auth.logIn(result.data);
   };
+  useEffect(() => {
+    return () => {
+      console.log('cleaned up');
+    };
+  }, []);
   return (
     <ImageBackground
       source={require('../assets/location.png')}

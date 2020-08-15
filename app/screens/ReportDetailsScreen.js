@@ -28,12 +28,13 @@ function ReportDetailsScreen({ route }) {
       />
       <View style={styles.detailsContainer}>
         <Text style={styles.title}>{reporting.title}</Text>
-        <Text style={styles.description}>${reporting.description}</Text>
+        <Text style={styles.description}>{reporting.description}</Text>
+        <Text style={styles.date}>Expiry date {reporting.date}</Text>
         <View style={styles.userContainer}>
           <ReportItem
             image={require('../assets/alan.jpg')}
             title="Alan Flynn"
-            subTitle="5 Reportings"
+            subTitle="Report"
           />
         </View>
       </View>
